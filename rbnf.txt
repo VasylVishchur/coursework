@@ -1,0 +1,31 @@
+<topRule> =    "program" <identifier> ; "start" "var" <varsBlok> ; <codeBlok> "finish"
+<varsBlok> =    "integer16" <identifier> [{<commaAndIdentifier>}];
+<identifier> =    <low_letter> {<up_letter>} {11}
+<commaAndIdentifier> =    "," <identifier>
+<codeBlok> =    <write> | <read> | <assignment> | <ifStatement> 
+| <goto_statement> | < labelRule > |  < forToOrDownToDoRule> | <while>  | <repeatUntil>;
+<read> =    "scan" <identifier>;
+<write> =    "print" <equation>;
+<assignment> =    <identifier> <==    <equation>;
+<ifStatement> =    "if" ( <equation> ) <codeBlok> [<elseStatement>];
+<elseStatement> = "else" <codeBlok>;
+<goto_statement> =  [<idenrifier>:]"goto" <identifier> [<idenrifier>:];
+< forToOrDownToDoRule> =  "for" <assignment> "to" | "downto" <equation> "do" <codeBlok> ;
+<while> = "while" (<equation>) "do" <codeBlok> "endwhile" 
+| "while" (<equation>) "do" <codeBlok> "exitwhile" "endwhile"
+| "while" (<equation>) "do" <codeBlok> "continuewhile"  <codeBlok> "endwhile";
+<repeatUntil> = "repeat" <codeBlok> "until" (<equation>);
+<equation> =    <signedNumber> | <identifier> |  <notRule> [{ <operationAndIdentOrNumber> | <equation> }];
+< notRule > =    <notOperation> <signedNumber> | <identifier> | <equation>;
+<operationAndIdentOrNumber> =    <mult> | <arithmetic> | <logic> | <compare> | <signedNumber> | <identifier> | <equation>; 
+<arithmetic> =    "add" | "sub";
+<mult> =    "*" | "/" | "%";
+<logic> =    "and" | "or";
+<notOperation> =    "not";
+<compare> =    "=" | "<>" | "<" |">";
+<comment> = "!!"{<low_letter> | <up_letter> | <digit>} ;
+<signedNumber>	=    [<sign>] <digit>[{digit}];
+<sign> =  "+" | "-"  ;
+<low_letter> =    a|b|c|d|e|f|g|h|i|j|k|l|n|m|o|p|q|r|s|t|u|v|w|x|y|z
+<up_letter> =    A|B|C|D|E|F|G|H|I|J|K|L|N|M|O|P|Q|R|S|T|U|V|W|X|Y|Z
+<digit> =    0|1|2|3|4|5|6|7|8|9
