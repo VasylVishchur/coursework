@@ -1,31 +1,37 @@
-<topRule> =    "program" <identifier> ; "start" "var" <varsBlok> ; <codeBlok> "finish"
-<varsBlok> =    "integer16" <identifier> [{<commaAndIdentifier>}];
-<identifier> =    <low_letter> {<up_letter>} {11}
-<commaAndIdentifier> =    "," <identifier>
-<codeBlok> =    <write> | <read> | <assignment> | <ifStatement> 
-| <goto_statement> | < labelRule > |  < forToOrDownToDoRule> | <while>  | <repeatUntil>;
-<read> =    "scan" <identifier>;
-<write> =    "print" <equation>;
-<assignment> =    <identifier> <==    <equation>;
-<ifStatement> =    "if" ( <equation> ) <codeBlok> [<elseStatement>];
-<elseStatement> = "else" <codeBlok>;
-<goto_statement> =  [<idenrifier>:]"goto" <identifier> [<idenrifier>:];
-< forToOrDownToDoRule> =  "for" <assignment> "to" | "downto" <equation> "do" <codeBlok> ;
-<while> = "while" (<equation>) "do" <codeBlok> "endwhile" 
-| "while" (<equation>) "do" <codeBlok> "exitwhile" "endwhile"
-| "while" (<equation>) "do" <codeBlok> "continuewhile"  <codeBlok> "endwhile";
-<repeatUntil> = "repeat" <codeBlok> "until" (<equation>);
-<equation> =    <signedNumber> | <identifier> |  <notRule> [{ <operationAndIdentOrNumber> | <equation> }];
-< notRule > =    <notOperation> <signedNumber> | <identifier> | <equation>;
-<operationAndIdentOrNumber> =    <mult> | <arithmetic> | <logic> | <compare> | <signedNumber> | <identifier> | <equation>; 
-<arithmetic> =    "add" | "sub";
-<mult> =    "*" | "/" | "%";
-<logic> =    "and" | "or";
-<notOperation> =    "not";
-<compare> =    "=" | "<>" | "<" |">";
-<comment> = "!!"{<low_letter> | <up_letter> | <digit>} ;
-<signedNumber>	=    [<sign>] <digit>[{digit}];
-<sign> =  "+" | "-"  ;
-<low_letter> =    a|b|c|d|e|f|g|h|i|j|k|l|n|m|o|p|q|r|s|t|u|v|w|x|y|z
-<up_letter> =    A|B|C|D|E|F|G|H|I|J|K|L|N|M|O|P|Q|R|S|T|U|V|W|X|Y|Z
-<digit> =    0|1|2|3|4|5|6|7|8|9
+topRule  = "program",  identifier , ";", "start", varsBlok, ";", operators, "finish";
+varsBlok  = "var", "integer16",  identifier,  { commaAndIdentifier };
+identifier  =  low_letter,   up_letter, up_letter, up_letter, up_letter, up_letter, up_letter, up_letter, up_letter, up_letter, up_letter, up_letter, up_letter ; 
+commaAndIdentifier  = ",",  identifier;
+stsatement = write  |  read  |  assignment  |  ifStatement   |  goto_statement  |   labelRule   |  forToOrDownToDoRule  |  while   |  repeatUntil;
+stsatements = {stsatement};
+statements_for_while = {statement | whileContinue | whileExit};
+read  = "scan", "(",  identifier,  ")";
+write  = "print", "(",  equation |  stringRule, ")";
+assignment  =  identifier,  "<==",  equation;
+cycle_counter = identifier;
+cycle_counter_last_value = equation;
+ifStatement  = "if", "(",  equation,  ")",  statements_for_while,  ["else",  statements_for_while, ";"];
+goto_statement  =  "goto",  ident ;
+labelRule  =  identifier, ":";
+forToOrDownToDoRule  =  "for",  cycle_counter, "<==",  equation , ("To" | "downto"),  cycle_counter_last_value,  "do",  statements, ";";
+while  = "while", equation,  statements_for_while, "end", "while";
+whileContinue = "continue", "while";
+whileExit = "exit", "while";
+repeatUntil  = "repeat",  operators, "until", "(", equation, ")";
+equation  =  signedNumber  |  identifier  |   notRule  {  operationAndIdentOrNumber  |  equation  };
+notRule   =  notOperation,   signedNumber  |  identifier  |  equation;
+operationAndIdentOrNumber  =  mult  |  arithmetic  |  logic  |  compare   signedNumber  |  identifier  |  equation;
+arithmetic  = "add" | "sub";
+mult  = "*" | "/" | "%";
+logic  = "and" | "or";
+notOperation  = "not";
+compare  = "=" | "<>" | "<" | ">";
+comment  =  "LComment",   text;
+LComment  =  "!!";
+text = {  low_letter  |  up_letter  |  number  };
+signedNumber 	= [ sign ] , ( nonzerodigit, {digit} | "0";
+sign = "+" | "-";
+low_letter = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z";
+up_letter = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z";
+digit = "0" | nonzerodigit; 
+nonzerodigit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
