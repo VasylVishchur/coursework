@@ -1,0 +1,57 @@
+!!Prog2
+program prog2;
+start
+var integer16 aAAAAAAAAAAAA,bBBBBBBBBBBBB,cCCCCCCCCCCCC;
+scan aAAAAAAAAAAAA;
+scan bBBBBBBBBBBBB;
+scan cCCCCCCCCCCCC;
+if(aAAAAAAAAAAAA > bBBBBBBBBBBBB)
+start
+	if(aAAAAAAAAAAAA > cCCCCCCCCCCCC)
+	start
+		goto Abigger;		
+	finish
+	else
+	start
+		print cCCCCCCCCCCCC;
+		goto Outofif;
+		Abigger:		
+		print aAAAAAAAAAAAA;
+		goto Outofif;
+	finish
+finish	
+if(bBBBBBBBBBBBB < cCCCCCCCCCCCC)
+start
+	print cCCCCCCCCCCCC;
+finish	
+else
+start
+	print bBBBBBBBBBBBB;
+finish
+Outofif:	
+
+if((aAAAAAAAAAAAA = bBBBBBBBBBBBB) and (aAAAAAAAAAAAA = cCCCCCCCCCCCC) and (bBBBBBBBBBBBB = cCCCCCCCCCCCC))
+start
+	print 1;
+finish	
+else
+start
+	print 0;
+finish
+if((aAAAAAAAAAAAA < 0) or (bBBBBBBBBBBBB < 0) or (cCCCCCCCCCCCC < 0))
+start
+	print -1;
+finish	
+else
+start
+	print 0;
+finish
+if(not(aAAAAAAAAAAAA < (bBBBBBBBBBBBB add cCCCCCCCCCCCC)))
+start
+	print(10);
+finish	
+else
+start
+	print(0);
+finish
+finish
